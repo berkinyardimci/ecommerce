@@ -34,7 +34,7 @@ class MyAccountManager(BaseUserManager):
         user.is_staff = True
         user.is_superadmin = True
         user.save(using=self._db)
-
+#Default olarak True ayarlanmalıdır.
 
 class Account(AbstractBaseUser):
     first_name = models.CharField(max_length=50)
@@ -52,8 +52,8 @@ class Account(AbstractBaseUser):
     is_active = models.BooleanField(default=False)
     is_superadmin = models.BooleanField(default=False)
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name','last_name']
+    USERNAME_FIELD = 'email'  #admin giriş ekranında sorulan yer
+    REQUIRED_FIELDS = ['username', 'first_name','last_name'] #Createuser,createsuper user gibi alanlarda zorunlu
 
     object = MyAccountManager()
 
@@ -63,5 +63,5 @@ class Account(AbstractBaseUser):
     def has_perm(self, perm, obj=None):
         return self.is_admin
 
-    def has_module_perms(self, add_label):
+    def has_module_perms(self, add_label):  
         return True        
